@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Server.Context;
+using Server.Services.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +20,7 @@ builder.Services.AddCors(options =>
                 .AllowCredentials(); // Allow cookies and credentials
         });
 });
-
+builder.Services.AddSingleton<JwtService>();
 
 builder.Services.AddAutoMapper(typeof(MapperProfile));
 builder.Services.AddControllers()

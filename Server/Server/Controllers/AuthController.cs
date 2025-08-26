@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Server.Context;
 using Server.DTOs.User;
 using Server.Models;
+using Server.Services.Server.Services;
 
 namespace Server.Controllers
 {
@@ -12,10 +13,12 @@ namespace Server.Controllers
     public class AuthController : ControllerBase
     {
         private readonly AppDbContext _dbContext;
+        private readonly JwtService _jwtService;
 
-        public AuthController(AppDbContext dbContext)
+        public AuthController(AppDbContext dbContext, JwtService jwtService)
         {
             _dbContext = dbContext;
+            _jwtService = jwtService;
         }
 
         [HttpPost("login")]
@@ -71,7 +74,9 @@ namespace Server.Controllers
             await _dbContext.Users.AddAsync(user);
             await _dbContext.SaveChangesAsync();
 
-            return Ok("User created Succesfully");
+            string token = _jwtService.GenerateToken(user.UserId,user.UserName);
+
+            return Ok(new {token=token});
         }
     }
 }
