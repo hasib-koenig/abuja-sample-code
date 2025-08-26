@@ -74,9 +74,10 @@ namespace Server.Controllers
             await _dbContext.Users.AddAsync(user);
             await _dbContext.SaveChangesAsync();
 
-            string token = _jwtService.GenerateToken(user.UserId,user.UserName);
+            List<string> roles = user.UserRoles.Select(user=> user.Role.RoleName).ToList();
+            string token = _jwtService.GenerateToken(user.UserId,user.UserName,roles);
 
-            return Ok(new {token=token});
+            return Ok(token);
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
+using Server.Models;
 
 namespace Server.Services
 {
@@ -18,9 +19,9 @@ namespace Server.Services
                 _configuration = configuration;
             }
 
-            public string GenerateToken(int userId, string userName)
+            public string GenerateToken(int userId, string userName,List<string> roles)
             {
-                var claims = GenerateClaims(userId, userName);
+                var claims = GenerateClaims(userId, userName, roles);
 
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -36,7 +37,7 @@ namespace Server.Services
                 return new JwtSecurityTokenHandler().WriteToken(token);
             }
 
-            private List<Claim> GenerateClaims(int userId, string userName)
+            private List<Claim> GenerateClaims(int userId, string userName, List<string> roles)
             {
                 var claims = new List<Claim>
             {
@@ -45,7 +46,14 @@ namespace Server.Services
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
-               
+                if (roles is not null)
+                {
+                    foreach (string role in roles)
+                    {
+                        claims.Add(new Claim(ClaimTypes.Role, role));
+                    }
+                }
+
                 return claims;
             }
 
