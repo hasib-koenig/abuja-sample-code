@@ -8,8 +8,8 @@
 
         public string UserPassword { get; set; } = string.Empty;
 
-        public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
         public ICollection<UserRole> ? UserRoles { get; set; }
         public ICollection<Product> ? Products { get; set; }

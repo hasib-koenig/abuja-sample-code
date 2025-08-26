@@ -106,3 +106,5 @@ C:\Users\mohdh\OneDrive\Desktop\Koenig\ASP\ppts\Lab\Server\Server\bin\Debug\net8
 C:\Users\mohdh\OneDrive\Desktop\Koenig\ASP\ppts\Lab\Server\Server\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\mohdh\OneDrive\Desktop\Koenig\ASP\ppts\Lab\Server\Server\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\mohdh\OneDrive\Desktop\Koenig\ASP\ppts\Lab\Server\Server\bin\Debug\net8.0\AutoMapper.dll
+C:\Users\mohdh\OneDrive\Desktop\Koenig\ASP\ppts\Lab\Server\Server\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\mohdh\OneDrive\Desktop\Koenig\ASP\ppts\Lab\Server\Server\obj\Debug\net8.0\Server.sourcelink.json

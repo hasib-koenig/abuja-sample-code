@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Server.Context;
+using Server.Models;
 
 
 
@@ -18,34 +20,34 @@ namespace Server.Controllers
 
         // GET: api/<RoleController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<ActionResult<IEnumerable<Role>>>  Get()
         {
-            return new string[] { "value1", "value2" };
+            var roles = await _dbContext.Roles.ToListAsync();
+            return Ok(roles);
         }
 
         // GET api/<RoleController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<ActionResult<Role>> Get(int id)
         {
-            return "value";
+            var role = await _dbContext.Roles.FirstOrDefaultAsync(role => role.RoleId == id);
+            return Ok(role);
         }
 
         // POST api/<RoleController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult> Post([FromBody] string roleName)
         {
+            var roleToCreate = new Role
+            {
+                RoleName = roleName,
+            };
+
+            await _dbContext.Roles.AddAsync(roleToCreate);
+            _dbContext.SaveChanges();
+
+            return CreatedAtAction("Get",new {Id = roleToCreate.RoleId},roleToCreate);
         }
 
-        // PUT api/<RoleController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<RoleController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }
